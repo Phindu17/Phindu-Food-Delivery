@@ -19,38 +19,46 @@
             <div class="resturants">
                 <h3>Kips Resturants</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Chicken & Chips', 12000)">Add Chicken & Chips - MWK12000</button>
+                <button onclick="addToCart('Chicken & Chips', 12000, 'Kips')">Add Chicken & Chips-MWK12000</button>
             </div>
 
              <div class="resturants">
                 <h3>Galitos</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Grilled Chicken', 8000)">Add Grilled Chicken - MWK8000</button>
+                <button onclick="addToCart('Grilled Chicken', 8000, 'Galitos')">Add Grilled Chicken - MWK8000</button>
             </div>
 
              <div class="resturants">
                 <h3>Chicken Lito</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Chicken Burger', 6500)">Add Chicken Burger - MWK6500</button>
+                <button onclick="addToCart('Chicken Burger', 6500, 'Chicken Lito')">Add Chicken Burger - MWK6500</button>
             </div>
 
              <div class="resturants">
-                <h3>Kwithu Cofee</h3>
+                <h3>KwithuCofee Den</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Cofee Tea', 5000)">Add Cofee Tea - MWK5000</button>
+                <button onclick="addToCart('Cofee Tea', 5000, 'KwithuCofee Den')">Add Cofee Tea - MWK5000</button>
             </div>
 
              <div class="resturants">
                 <h3>Bella's Food Court</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Rice & Beef', 12000)">Add Rice & Beef - MWK12000</button>
+                <button onclick="addToCart('Rice & Beef', 12000, 'Bellas Food Court')">Add Rice & Beef - MWK12000</button>
             </div>
 
              <div class="resturants">
                 <h3>Macondo Camp</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Chicken Pizza', 28000)">Add Chicken & Chips - MWK12000</button>
+                <button onclick="addToCart('Chicken Pizza', 28000, 'Macondo Camp')">Add Chicken & Chips - MWK12000</button>
             </div>
+
+              <div class="resturants">
+                <h3>Serenity Gardens</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Ice creams', 5000, 'Serenity Gardens')">Add Chicken & Chips - MWK12000</button>
+            </div>
+
+            
         </section>
 
           <section class="cart">
@@ -104,14 +112,17 @@ window.placeOrder = async function(cart, total) {
 
   try {
     await addDoc(collection(db, "orders"), {
-      customerName: name,
-      phone: phone,
-      location: location,
-      items: cart,
-      total: total,
-      status: "Pending",
-      createdAt: new Date()
-    });
+  customerName: name,
+  phone: phone,
+  location: location,
+  items: cart,
+  total: total,
+  restaurant: cart[0].restaurant, // 🔥 important
+  status: "Pending",
+  rider: "Not Assigned",
+  commission: total * 0.10, // 10% platform fee
+  createdAt: new Date()
+});
 
     alert("Order Placed Successfully!");
     location.reload();

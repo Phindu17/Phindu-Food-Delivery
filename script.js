@@ -2,11 +2,18 @@ let cart = [];
 let total = 0;
 
 // Add item to cart
-function addToCart(name, price) {
-    cart.push({ name, price });
-    total += price;
-    updateCart();
+function addToCart(name, price, restaurant) {
+
+  cart.push({
+    name: name,
+    price: price,
+    restaurant: restaurant   // 🔥 THIS IS IMPORTANT
+  });
+
+  total += price;
+  displayCart();
 }
+
 
 // Update cart display
 function updateCart() {

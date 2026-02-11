@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurant Login</title>
+</head>
+<body>
+
+<h2>Restaurant Login</h2>
+
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+   apiKey: "AIzaSyALtR0mlpKS-LPtePOAdyZfcHLnkAzY1sE",
+  authDomain: "phindu-food.firebaseapp.com",
+  projectId: "phindu-food",
+  storageBucket: "phindu-food.firebasestorage.app",
+  messagingSenderId: "592904945081",
+  appId: "1:592904945081:web:021915a3801648eca14168",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+  .then(() => {
+    alert("Login successful");
+    window.location.href = "admin.html";
+  })
+  .catch((error) => {
+    alert("Login failed");
+  });
+}
+
+</script>
+
+</body>
+</html>
