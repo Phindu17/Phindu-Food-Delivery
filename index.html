@@ -62,7 +62,7 @@
                 <input type="text" id="phone" placeholder="Phone Number">
                 <input type="text" id="location" placeholder="Delivery Location">
 
-                <button onclick="placeOrder()">Place Order</button>
+                <button onclick="placeOrder(cart, total)">Place Order</button>
                 </section>
 
                 <footer>
@@ -70,5 +70,58 @@
                 </footer>
 
                 <script src="script.js"></script>
+
+            <!--Firebase SDK-->
+            <script type="module">
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+                import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+              //  PASTE YOUR FIREBASE CONFIG HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyALtR0mlpKS-LPtePOAdyZfcHLnkAzY1sE",
+  authDomain: "phindu-food.firebaseapp.com",
+  projectId: "phindu-food",
+  storageBucket: "phindu-food.firebasestorage.app",
+  messagingSenderId: "592904945081",
+  appId: "1:592904945081:web:021915a3801648eca14168",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Place Order Function
+window.placeOrder = async function(cart, total) {
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const location = document.getElementById("location").value;
+
+  if (!name || !phone || !location) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "orders"), {
+      customerName: name,
+      phone: phone,
+      location: location,
+      items: cart,
+      total: total,
+      status: "Pending",
+      createdAt: new Date()
+    });
+
+    alert("Order Placed Successfully!");
+    location.reload();
+
+  } catch (error) {
+    alert("Error placing order");
+    console.error(error);
+  }
+}
+            
+    </script>   
     </body>
 </html>
