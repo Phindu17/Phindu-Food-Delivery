@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PhinduFood Admin</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background:#f4f4f4; }
+    .order {
+      background:white;
+      padding:15px;
+      margin-bottom:15px;
+      border-radius:8px;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      padding:8px 12px;
+      margin-right:5px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    }
+    .accept { background:green; color:white; }
+    .reject { background:red; color:white; }
+  </style>
+</head>
+
+<script>
+const password = prompt("Enter Admin Password:");
+if(password !== "phindu123"){
+  alert("Wrong password");
+  window.location.href = "index.html";
+}
+</script>
+
+<body>
+
+<h2>Admin Dashboard - Live Orders</h2>
+
+<div id="orders"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+// 🔥 USE SAME FIREBASE CONFIG
+const firebaseConfig = {
+   apiKey: "AIzaSyALtR0mlpKS-LPtePOAdyZfcHLnkAzY1sE",
+  authDomain: "phindu-food.firebaseapp.com",
+  projectId: "phindu-food",
+  storageBucket: "phindu-food.firebasestorage.app",
+  messagingSenderId: "592904945081",
+  appId: "1:592904945081:web:021915a3801648eca14168",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ordersDiv = document.getElementById("orders");
+
+// 🔥 REALTIME LISTENER
+onSnapshot(collection(db, "orders"), (snapshot) => {
+  ordersDiv.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    ordersDiv.innerHTML += `
+      <div class="order">
+        <h3>${data.customerName}</h3>
+        <p>Phone: ${data.phone}</p>
+        <p>Location: ${data.location}</p>
+        <p>Total: MWK ${data.total}</p>
+        <p>Status: <strong>${data.status}</strong></p>
+        <button class="accept" onclick="updateStatus('${docSnap.id}','Accepted')">Accept</button>
+        <button class="reject" onclick="updateStatus('${docSnap.id}','Rejected')">Reject</button>
+      </div>
+    `;
+  });
+});
+
+// 🔥 UPDATE STATUS
+window.updateStatus = async function(id, status) {
+  const orderRef = doc(db, "orders", id);
+  await updateDoc(orderRef, {
+    status: status
+  });
+}
+
+</script>
+
+</body>
+</html>
