@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Phindu Food Delivery</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <header>
+            <h1> Phindu Food Delivery </h1>
+            <p> Order food from resturants </p>
+        </header>
+
+        <section class="resturants">
+            <h2>Resturants in Mzuzu</h2>
+
+            <div class="resturants">
+                <h3>Kips Resturants</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Chicken & Chips', 12000)">Add Chicken & Chips - MWK12000</button>
+            </div>
+
+             <div class="resturants">
+                <h3>Galitos</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Grilled Chicken', 8000)">Add Grilled Chicken - MWK8000</button>
+            </div>
+
+             <div class="resturants">
+                <h3>Chicken Lito</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Chicken Burger', 6500)">Add Chicken Burger - MWK6500</button>
+            </div>
+
+             <div class="resturants">
+                <h3>Kwithu Cofee</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Cofee Tea', 5000)">Add Cofee Tea - MWK5000</button>
+            </div>
+
+             <div class="resturants">
+                <h3>Bella's Food Court</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Rice & Beef', 12000)">Add Rice & Beef - MWK12000</button>
+            </div>
+
+             <div class="resturants">
+                <h3>Macondo Camp</h3>
+                <p> Mzuzu City </p>
+                <button onclick="addToCart('Chicken Pizza', 28000)">Add Chicken & Chips - MWK12000</button>
+            </div>
+        </section>
+
+          <section class="cart">
+                <h2>Your Cart</h2>
+                <ul id="cartItems"></ul>
+                <h3>Total: MWK <span id="total">0</span></h3>
+
+                <input type="text" id="name" placeholder="Your Name">
+                <input type="text" id="phone" placeholder="Phone Number">
+                <input type="text" id="location" placeholder="Delivery Location">
+
+                <button onclick="placeOrder()">Place Order</button>
+                </section>
+
+                <footer>
+                  <p>&copy; 2026 Phindu Food Delivery</p>
+                </footer>
+
+                <script src="script.js"></script>
+    </body>
+</html>

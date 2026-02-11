@@ -1,0 +1,58 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+header{
+    background: #ff5722;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.resturant{
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.resturant button{
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart{
+    background: white;
+    margin: 15px;
+    border-radius: 8px;
+}
+
+.cart input{
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+.cart button{
+    width: 100%;
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+footer{
+    text-align: center;
+    padding: 10px;
+    background: #222;
+    color: white;
+}
