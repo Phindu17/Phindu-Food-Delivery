@@ -65,16 +65,22 @@ onSnapshot(collection(db, "orders"), (snapshot) => {
     const data = docSnap.data();
 
     ordersDiv.innerHTML += `
-      <div class="order">
-        <h3>${data.customerName}</h3>
-        <p>Phone: ${data.phone}</p>
-        <p>Location: ${data.location}</p>
-        <p>Total: MWK ${data.total}</p>
-        <p>Status: <strong>${data.status}</strong></p>
-        <button class="accept" onclick="updateStatus('${docSnap.id}','Accepted')">Accept</button>
-        <button class="reject" onclick="updateStatus('${docSnap.id}','Rejected')">Reject</button>
-      </div>
-    `;
+  <div class="order">
+    <h3>${data.customerName}</h3>
+    <p>Phone: ${data.phone}</p>
+    <p>Location: ${data.location}</p>
+    <p>Total: MWK ${data.total}</p>
+
+    <p>Payment Method: ${data.paymentMethod}</p>
+    <p>Payment Status: ${data.paymentStatus}</p>
+
+    <p>Status: <strong>${data.status}</strong></p>
+
+    <button class="accept" onclick="updateStatus('${docSnap.id}','Accepted')">Accept</button>
+    <button class="reject" onclick="updateStatus('${docSnap.id}','Rejected')">Reject</button>
+  </div>
+`;
+
   });
 });
 

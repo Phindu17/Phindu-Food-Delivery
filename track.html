@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Track Order</title>
+</head>
+<body>
+
+<h2>Track Your Order</h2>
+
+<input type="text" id="phone" placeholder="Enter Phone Number">
+<button onclick="trackOrder()">Track</button>
+
+<div id="result"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyALtR0mlpKS-LPtePOAdyZfcHLnkAzY1sE",
+  authDomain: "phindu-food.firebaseapp.com",
+  projectId: "phindu-food",
+  storageBucket: "phindu-food.firebasestorage.app",
+  messagingSenderId: "592904945081",
+  appId: "1:592904945081:web:021915a3801648eca14168",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.trackOrder = async function() {
+
+  const phone = document.getElementById("phone").value;
+
+  const q = query(collection(db, "orders"), where("phone", "==", phone));
+
+  const querySnapshot = await getDocs(q);
+
+  let output = "";
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+
+    output += `
+      <div style="background:#f4f4f4;padding:10px;margin:10px;">
+        <p>Total: MWK ${data.total}</p>
+        <p>Status: ${data.status}</p>
+        <p>Rider: ${data.rider}</p>
+      </div>
+    `;
+  });
+
+  document.getElementById("result").innerHTML = output || "No order found";
+}
+
+</script>
+
+</body>
+</html>

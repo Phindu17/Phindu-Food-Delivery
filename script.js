@@ -12,26 +12,65 @@ function addToCart(name, price, restaurant) {
 
   total += price;
   displayCart();
+
+  function calculateDeliveryFee(location) {
+
+  location = location.toLowerCase();
+
+  if (location.includes("chibavi")) return 1000;
+  if (location.includes("luwinga")) return 2000;
+  if (location.includes("chimaliro")) return 1500;
+  if (location.includes("mzuzu cbd")) return 800;
+
+  return 2500; // default fee
+}
+
+}
+
+    // Update cart display
+    function displayCart() {
+
+  const cartList = document.getElementById("cartItems");
+  cartList.innerHTML = "";
+
+  cart.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item.name + " - MWK " + item.price;
+    cartList.appendChild(li);
+  });
+
+  document.getElementById("total").textContent = total;
+
+
+
+  updateTotals();   // ✅ CALLING the function here
+
+  function updateTotals() {
+
+  const location = document.getElementById("location").value;
+  const deliveryFee = calculateDeliveryFee(location);
+  const grandTotal = total + deliveryFee;
+
+  document.getElementById("deliveryFee").textContent = deliveryFee;
+  document.getElementById("grandTotal").textContent = grandTotal;
+}
+
 }
 
 
-// Update cart display
-function updateCart() {
-    const cartList = document.getElementById("cartItems");
-    const totalDisplay = document.getElementById("total");
 
-    cartList.innerHTML = "";
 
-    cart.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-            ${item.name} - MWK ${item.price}
-            <button onclick="removeItem(${index})">❌</button>
-        `;
-        cartList.appendChild(li);
-    });
 
-    totalDisplay.textContent = total;
+  cartList.innerHTML = "";
+
+  cart.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item.name + " - MWK " + item.price;
+    cartList.appendChild(li);
+  });
+
+  totalDisplay.textContent = total;
+
 }
 
 // Remove item
@@ -46,6 +85,8 @@ function placeOrder() {
     const name = document.getElementById("name").value;
     const phone = document.getElementById("phone").value;
     const location = document.getElementById("location").value;
+    const deliveryFee = calculateDeliveryFee(location);
+const grandTotal = total + deliveryFee;
 
     if (cart.length === 0) {
         alert("Please add food to cart.");

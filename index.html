@@ -55,7 +55,7 @@
               <div class="resturants">
                 <h3>Serenity Gardens</h3>
                 <p> Mzuzu City </p>
-                <button onclick="addToCart('Ice creams', 5000, 'Serenity Gardens')">Add Chicken & Chips - MWK12000</button>
+                <button onclick="addToCart('Ice creams', 5000, 'Serenity Gardens')">Add Ice Cream - MWK5000</button>
             </div>
 
             
@@ -65,12 +65,23 @@
                 <h2>Your Cart</h2>
                 <ul id="cartItems"></ul>
                 <h3>Total: MWK <span id="total">0</span></h3>
+                <h3>Delivery Fee: MWK <span id="deliveryFee">0</span></h3>
+                <h2>Grand Total: MWK <span id="grandTotal">0</span></h2>
 
-                <input type="text" id="name" placeholder="Your Name">
-                <input type="text" id="phone" placeholder="Phone Number">
-                <input type="text" id="location" placeholder="Delivery Location">
+                <button onclick="clearCart()">Clear Cart</button>
 
-                <button onclick="placeOrder(cart, total)">Place Order</button>
+                <input type="text" id="name" placeholder="Your Name"><br><br>
+                <input type="text" id="phone" placeholder="Phone Number"><br><br>
+                <input type="text" id="location" placeholder="Delivery Location" oninput="updateTotals()"><br><br>
+
+                <h3>Select Payment Method</h3>
+                <select id="paymentMethod">
+                <option value="cod">Pay On Delivery</option>
+                <option value="airtel">Airtel Money</option>
+                <option value="mpamba">TNM Mpamba</option>
+                </select><br><br>
+
+                <button onclick="placeOrder()">Place Order</button>
                 </section>
 
                 <footer>
@@ -99,11 +110,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Place Order Function
-window.placeOrder = async function(cart, total) {
+window.placeOrder = async function() {
 
   const name = document.getElementById("name").value;
   const phone = document.getElementById("phone").value;
   const location = document.getElementById("location").value;
+  const paymentMethod = document.getElementById("paymentMethod").value;
 
   if (!name || !phone || !location) {
     alert("Please fill all fields");
@@ -116,18 +128,28 @@ window.placeOrder = async function(cart, total) {
   phone: phone,
   location: location,
   items: cart,
-  total: total,
-  restaurant: cart[0].restaurant, // 🔥 important
+  foodTotal: total,
+  deliveryFee: deliveryFee,
+  total: grandTotal,
+  restaurant: cart[0].restaurant,
+  paymentMethod: paymentMethod,
+  paymentStatus: paymentMethod === "cod" ? "Pending" : "Waiting Confirmation",
   status: "Pending",
   rider: "Not Assigned",
-  commission: total * 0.10, // 10% platform fee
+  commission: total * 0.10,
   createdAt: new Date()
 });
 
     alert("Order Placed Successfully!");
     location.reload();
 
-  } catch (error) {
+
+      cart = [];
+      total = 0;
+      displayCart();
+  } 
+  
+  catch (error) {
     alert("Error placing order");
     console.error(error);
   }
